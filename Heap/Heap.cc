@@ -120,19 +120,27 @@ public:
 
 void max_heapify (vector<int>& vec, int size, int i) {
         int current = i;
-        int leftchild = 2*i;
-        int rightchild = 2*i + 1;
+        int leftchild = 2*i+1;
+        int rightchild = 2*i+2;
 
-        if(leftchild <= size && vec[leftchild] > vec[current]) {
+        if(leftchild < size && vec[leftchild] > vec[current]) {
             current = leftchild;
         }
-        if(rightchild <= size && vec[rightchild] > vec[current]) {
+        if(rightchild < size && vec[rightchild] > vec[current]) {
             current = rightchild;
         }
         if(current != i) {
             swap(vec[current], vec[i]);
             max_heapify(vec, size, current);
         }
+}
+
+void HeapSort (vector<int>& vec, int size) {
+    while(size>0) {
+        --size;
+        swap(vec[0],vec[size]);
+        max_heapify(vec, size, 0);
+    }
 }
 
 int main () {
@@ -164,12 +172,23 @@ int main () {
 
     cout<<"Max Heapify"<<endl;
     
-    vector<int> v{INT_MIN, 54, 55, 53, 52, 50};
-    for(int i = 5/2; i >= 1; --i) {
+    vector<int> v{54, 55, 53, 52, 50};
+    for(int i = (5/2)-1; i >= 0; --i) {
         max_heapify(v, 5, i);
     }
-    for(auto i = v.begin()+1; i!=v.end(); ++i) {
+    for(auto i = v.begin(); i!=v.end(); ++i) {
         cout<<*i<<" ";
+    }cout<<endl;
+
+    cout<<"Heap Sort"<<endl;
+    vector<int> v2{5, 4 ,3, 2, 1};
+    //Heap Creation
+    for(int i = (5/2)-1; i >= 0; --i) {
+        max_heapify(v2, 5, i);
+    }
+    HeapSort(v2, 5);
+    for(int i = 0; i<5; ++i) {
+        cout<<v2[i]<<" ";
     }cout<<endl;
 
     return 0;
